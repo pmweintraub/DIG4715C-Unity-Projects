@@ -28,6 +28,9 @@ public class PlayerScript : MonoBehaviour
 
     private bool gamePaused;
 
+    public float jumpPower;
+
+    private bool isGrounded;
 
     void Start()
     {
@@ -112,6 +115,23 @@ public class PlayerScript : MonoBehaviour
         {
             anim.SetInteger("State", 0);
         }
+
+        if(Input.GetKey(KeyCode.W) && isGrounded)
+        {
+            rd2d.velocity = new Vector2(rd2d.velocity.x, jumpPower);
+            isGrounded = false;
+            musicSource.clip = musicClipFive;
+            musicSource.Play();
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
+        {
+            rd2d.velocity = new Vector2(rd2d.velocity.x, jumpPower);
+            isGrounded = false;
+            musicSource.clip = musicClipFive;
+            musicSource.Play();
+        }
+
     }
 
     void Flip()
@@ -125,9 +145,7 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
         float hozMovement = Input.GetAxis("Horizontal");
-        float vertMovement = Input.GetAxis("Vertical");
-        Vector2 movement = new Vector2(hozMovement, vertMovement).normalized;
-        rd2d.velocity = movement * speed;
+        rd2d.velocity = new Vector2(hozMovement * speed, rd2d.velocity.y);
         if (facingRight == false && hozMovement > 0)
         {
             Flip();
@@ -183,29 +201,11 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Floor")
+        if(collision.collider.tag == "Floor")
         {
-
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
-                musicSource.clip = musicClipFive;
-                musicSource.Play();
-            }
-            else if (Input.GetKey(KeyCode.W))
-            {
-                rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
-                musicSource.clip = musicClipFive;
-                musicSource.Play();
-            }
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chao-Jump"))
-            {
-                anim.SetInteger("State", 0);
-            }
+            isGrounded = true;
         }
     }
-
 
 
     void SetScoreText()
