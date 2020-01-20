@@ -27,7 +27,6 @@ public class PlayerScript : MonoBehaviour
     Animator anim;
 
     private bool gamePaused;
-    private bool isGrounded;
 
 
     void Start()
@@ -186,30 +185,24 @@ public class PlayerScript : MonoBehaviour
     {
         if (collision.collider.tag == "Floor")
         {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
 
-        if (isGrounded == true && Input.GetKey(KeyCode.UpArrow))
-        {
-            rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
-            musicSource.clip = musicClipFive;
-            musicSource.Play();
-            isGrounded = false;
-        }
-        else if (isGrounded == true && Input.GetKey(KeyCode.W))
-        {
-            rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
-            musicSource.clip = musicClipFive;
-            musicSource.Play();
-            isGrounded = false;
-        }
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chao-Jump"))
-        {
-            anim.SetInteger("State", 0);
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
+                musicSource.clip = musicClipFive;
+                musicSource.Play();
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                rd2d.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
+                musicSource.clip = musicClipFive;
+                musicSource.Play();
+            }
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chao-Jump"))
+            {
+                anim.SetInteger("State", 0);
+            }
         }
     }
 
