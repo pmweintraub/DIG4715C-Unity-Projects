@@ -205,6 +205,10 @@ public class PlayerScript : MonoBehaviour
         {
             isGrounded = true;
         }
+        /*if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chao-Jump2"))
+        {
+            anim.SetInteger("State", 0);
+        }*/
     }
 
 
